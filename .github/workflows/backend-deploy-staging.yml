@@ -88,7 +88,7 @@ jobs:
 
       - id: deploy
         name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@v2
+        uses: google-github-actions/deploy-cloudrun@v3
         with:
           tag: staging
           no_traffic: false
