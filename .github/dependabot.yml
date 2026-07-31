@@ -1,0 +1,38 @@
+# Dependabot defaults to scanning the repository root. In a monorepo it must be
+# pointed at each package explicitly, otherwise it silently finds no manifests.
+# The frontend previously received Dependabot PRs from its own repository — this
+# restores that after the merge, and adds the two Python manifests.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /prd-agent-frontend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  - package-ecosystem: pip
+    directory: /prd-agent-backend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  # The agent service pins google-adk separately from the backend.
+  - package-ecosystem: pip
+    directory: /prd-agent-backend/agents
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: docker
+    directory: /prd-agent-backend
+    schedule:
+      interval: weekly

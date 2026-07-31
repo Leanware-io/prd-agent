@@ -1,0 +1,124 @@
+name: Backend Deploy Production
+
+on:
+  workflow_dispatch: {}
+  release:
+    types: [published]
+
+jobs:
+  build-and-push:
+    name: Build and push to GAR
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SQLALCHEMY_DATABASE_URI: ${{ secrets.SQLALCHEMY_DATABASE_URI }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      GOOGLE_CLOUD_PROJECT: ${{ vars.GCP_PROJECT_ID }}
+      ENVIRONMENT: production
+      SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+      PRD_BUCKET: ${{ vars.PRD_BUCKET }}
+      SESSIONS_SECRET_KEY: ${{ secrets.SESSIONS_SECRET_KEY }}
+      MODEL: ${{ vars.MODEL }}
+      AI_SERVICE_URL: ${{ vars.AI_SERVICE_URL }}
+      AI_APP_NAME: ${{ vars.AI_APP_NAME }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID }}
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+      TEAM_EMAIL: ${{ vars.TEAM_EMAIL }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        working-directory: prd-agent-backend
+        run: printenv > .env
+
+      - name: Create firebase credentials
+        working-directory: prd-agent-backend
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > ./firebase-credentials.json
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+
+      - name: Login to Google Artifact Registry
+        run: |-
+          echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://${{ vars.GCP_REGION }}-docker.pkg.dev
+
+      - id: docker-push-tagged
+        name: Build, tag, and push image to Google Artifact Registry
+        uses: docker/build-push-action@v6
+        with:
+          context: ./prd-agent-backend
+          file: ./prd-agent-backend/Dockerfile
+          push: true
+          tags: |
+            ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/prd-backend/prd:${{ github.run_id }}
+            ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/prd-backend/prd:production
+
+  deploy:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    environment: production
+    needs: build-and-push
+    steps:
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+
+      - id: deploy
+        name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          tag: production
+          no_traffic: false
+          service: prd-production
+          image: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/prd-backend/prd:production
+          region: ${{ vars.GCP_REGION }}
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+
+      - name: Output URL
+        run: 'echo "Backend deployed, URL is: ${{ steps.deploy.outputs.url }}"'
+
+  deploy-agents:
+    name: Deploy agents to Cloud Run
+    runs-on: ubuntu-latest
+    environment: production
+    needs: build-and-push
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+
+      - id: install-adk
+        name: Install Google ADK Python module
+        working-directory: prd-agent-backend/agents
+        run: |
+          pip install -r ./requirements.txt
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
+          echo "MODEL=${{ vars.MODEL }}" >> .env
+
+      - id: deploy-using-adk
+        name: Deploy to Cloud Run using the ADK CLI
+        working-directory: prd-agent-backend
+        run: |
+          adk deploy cloud_run \
+            --project=${{ vars.GCP_PROJECT_ID }} \
+            --region=${{ vars.GCP_REGION }} \
+            --service_name=prd-agent-service-prod \
+            agents/

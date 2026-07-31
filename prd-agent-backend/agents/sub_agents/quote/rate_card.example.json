@@ -1,0 +1,53 @@
+{
+  "_comment": [
+    "PLACEHOLDER RATE CARD — these are not Leanware's commercial rates.",
+    "The figures are deliberately round and fictional so that the quoting agent",
+    "is runnable without publishing real pricing. Supply the real card at",
+    "deploy time by writing a file with this same shape and pointing the",
+    "QUOTE_RATE_CARD_PATH environment variable at it."
+  ],
+  "is_placeholder": true,
+  "currency": "USD",
+  "managed_premium_pct": 10,
+  "hours_per_month": 160,
+  "roles": [
+    { "role": "Junior Developer", "min_hourly": 30, "max_hourly": 40 },
+    { "role": "Mid-level Developer", "min_hourly": 50, "max_hourly": 60 },
+    { "role": "Senior Developer", "min_hourly": 70, "max_hourly": 80 },
+    { "role": "Tech Lead", "min_hourly": 90, "max_hourly": 100 },
+    { "role": "Product Designer", "min_hourly": 50, "max_hourly": 60 },
+    { "role": "UX/UI Designer", "min_hourly": 50, "max_hourly": 60 },
+    { "role": "Quality Assurance", "min_hourly": 40, "max_hourly": 50 },
+    { "role": "DevOps Engineer", "min_hourly": 60, "max_hourly": 70 },
+    { "role": "Product Owner", "min_hourly": 70, "max_hourly": 80 },
+    { "role": "Project Manager", "included_in_premium": true },
+    { "role": "Scrum Master", "included_in_premium": true }
+  ],
+  "complexity_bands": [
+    {
+      "level": "Very Low",
+      "description": "Simple UI components, minor changes",
+      "hours": "4-16 hours"
+    },
+    {
+      "level": "Low",
+      "description": "Simple functionality, easy integrations",
+      "hours": "16-40 hours"
+    },
+    {
+      "level": "Medium",
+      "description": "Complete features, medium integrations",
+      "hours": "40-80 hours"
+    },
+    {
+      "level": "High",
+      "description": "Complex functionalities, multiple integrations",
+      "hours": "80-160 hours"
+    },
+    {
+      "level": "Very High",
+      "description": "Complex systems, advanced algorithms, innovation",
+      "hours": "160+ hours"
+    }
+  ]
+}

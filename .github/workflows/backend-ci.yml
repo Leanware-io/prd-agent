@@ -1,0 +1,73 @@
+name: Backend CI
+
+on:
+  pull_request:
+    paths:
+      - "prd-agent-backend/**"
+      - ".github/workflows/backend-ci.yml"
+  push:
+    branches:
+      - main
+      - release
+    paths:
+      - "prd-agent-backend/**"
+      - ".github/workflows/backend-ci.yml"
+
+defaults:
+  run:
+    working-directory: prd-agent-backend
+
+jobs:
+  lint-and-test:
+    name: Lint and test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    env:
+      SQLALCHEMY_DATABASE_URI: "sqlite:///:memory:"
+      SECRET_KEY: "test-only-not-a-real-secret"
+      SESSIONS_SECRET_KEY: "test-only-not-a-real-secret"
+      ANTHROPIC_API_KEY: "test"
+      OPENAI_API_KEY: "test"
+      ENVIRONMENT: "test"
+      AI_SERVICE_URL: "http://localhost:8000"
+      AI_APP_NAME: "agents"
+      SLACK_BOT_TOKEN: "test"
+      SLACK_CHANNEL_ID: "test"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            prd-agent-backend/requirements.txt
+            prd-agent-backend/test-requirements.txt
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+
+      - name: Remove unused imports with autoflake
+        run: autoflake --check-diff --remove-all-unused-imports --remove-unused-variables --recursive --exclude env,venv,migrations,__init__.py .
+
+      - name: Sort imports with isort
+        run: isort . --skip migrations --profile black --check-only --diff
+
+      - name: Format code with black
+        run: black . --exclude "migrations|__init__.py" --check --diff
+
+      - name: Run Pylint api
+        run: pylint --recursive y api --ignore=migrations --disable=missing-docstring
+
+      - name: Run Pylint prd_agent
+        run: pylint --recursive y prd_agent --ignore=migrations --disable=missing-docstring
+
+      # TODO: tests are not currently executed in CI. Re-enable once the suite
+      # passes against an in-memory database.
+      # - name: Run tests
+      #   run: pytest tests

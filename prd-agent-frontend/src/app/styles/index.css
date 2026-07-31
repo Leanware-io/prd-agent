@@ -1,0 +1,292 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 157 65% 57%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 195 100% 10%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.75rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-white text-secondary-900 font-nunito;
+
+    height: 100vh;
+    overflow: hidden;
+    scroll-behavior: smooth;
+  }
+
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-raleway;
+  }
+}
+
+@layer components {
+  .btn-primary-dark {
+    @apply bg-secondary text-white py-3 px-6 rounded-button transition-all hover:bg-secondary-700;
+  }
+
+  .btn-primary-light {
+    @apply bg-primary text-white py-3 px-6 rounded-button transition-all hover:bg-primary-700;
+  }
+
+  .btn-secondary-dark {
+    @apply border border-secondary text-secondary bg-transparent py-3 px-6 rounded-button transition-all hover:bg-secondary/10;
+  }
+
+  .btn-secondary-light {
+    @apply border border-primary text-primary bg-transparent py-3 px-6 rounded-button transition-all hover:bg-primary/10;
+  }
+
+  .container-card {
+    @apply rounded-container shadow-md p-6;
+  }
+
+  .shadow-text {
+    text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+  }
+
+  .typing-indicator {
+    align-items: center;
+    display: flex;
+  }
+
+  .typing-indicator span {
+    width: 8px;
+    height: 8px;
+    animation: typing 1.4s infinite ease-in-out;
+    background: theme("colors.primary.500");
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+  }
+
+  .typing-indicator span:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+    margin-right: 0;
+  }
+
+  @keyframes typing {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+    }
+
+    30% {
+      transform: translateY(-4px);
+    }
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.h-screen {
+  height: 100vh;
+  overflow: hidden;
+}
+
+[data-radix-scroll-area-viewport] {
+  height: 100% !important;
+}
+
+.markdown {
+  @apply text-white/70;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-weight: bold;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  @apply text-primary;
+}
+
+.markdown h1 {
+  font-size: 2em;
+}
+
+.markdown h2 {
+  font-size: 1.75em;
+}
+
+.markdown h3 {
+  font-size: 1.5em;
+}
+
+.markdown h4 {
+  font-size: 1.25em;
+}
+
+.markdown h5 {
+  font-size: 1.1em;
+}
+
+.markdown h6 {
+  font-size: 1em;
+}
+
+.markdown p {
+  white-space: break-spaces;
+}
+
+.markdown p:not(:first-child, :last-child) {
+  margin: 0.5em 0;
+}
+
+.markdown ol,
+.markdown ul {
+  padding-left: 20px;
+}
+
+.markdown ul {
+  list-style-type: disc;
+}
+
+.markdown ol {
+  list-style-type: decimal;
+}
+
+.markdown strong,
+.markdown b {
+  font-weight: bold;
+}
+
+.markdown em,
+.markdown b {
+  font-style: italic;
+}
+
+.markdown table {
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: auto;
+}
+
+.markdown thead,
+.markdown tbody {
+  border-collapse: collapse;
+  border-spacing: 0;
+  box-sizing: border-box;
+}
+
+.markdown table thead th,
+.markdown table tbody tr:not(:last-child) td {
+  @apply border-b border-white/70 p-4;
+}
+
+.markdown table tbody tr:last-child td {
+  @apply p-4;
+}
+
+.markdown table thead th {
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: bottom;
+
+  @apply text-white;
+}
+
+.markdown table tbody td {
+  line-height: 1.5;
+  vertical-align: middle;
+}

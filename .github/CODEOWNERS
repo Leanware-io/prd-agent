@@ -1,0 +1,20 @@
+# Only the CODEOWNERS file at the repository root (or in .github/ or docs/) is
+# read by GitHub. Per-package CODEOWNERS files are ignored, so ownership for
+# both packages is declared here with path scoping.
+#
+# Later matches take precedence over earlier ones.
+
+# Default owner for anything not matched below
+*                       @jarvy-sanchez
+
+# Backend, including the ADK agent system
+/prd-agent-backend/     @jarvy-sanchez @Thebiglord16
+
+# Frontend
+/prd-agent-frontend/    @jarvy-sanchez @ivangonzalez-leanware
+
+# Repo-wide infrastructure and docs
+/.github/               @jarvy-sanchez
+/README.md              @jarvy-sanchez
+/CLAUDE.md              @jarvy-sanchez
+/LICENSE                @jarvy-sanchez

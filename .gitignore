@@ -1,0 +1,110 @@
+# Root-level ignores for the PRD Agent monorepo.
+# Each package also has its own .gitignore, which still applies within its
+# subtree. The patterns here are deliberately broad: this is the safety net
+# that keeps credentials out of a public repository.
+
+# ---------------------------------------------------------------------------
+# Secrets — never commit these
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env-example
+!.env-sample
+*.env.local
+
+# Service accounts, private keys, credential dumps
+*credentials*.json
+!*credentials*.example.json
+sa.json
+service-account*.json
+firebase-credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+!**/public/**/*.key
+
+# ---------------------------------------------------------------------------
+# Dependencies & virtual environments
+# ---------------------------------------------------------------------------
+node_modules/
+bower_components/
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+__pypackages__/
+
+# ---------------------------------------------------------------------------
+# Build output
+# ---------------------------------------------------------------------------
+dist/
+dist-ssr/
+build/
+*.local
+.firebase/
+staticfiles/
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+
+# ---------------------------------------------------------------------------
+# JavaScript / TypeScript
+# ---------------------------------------------------------------------------
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.env.sentry-build-plugin
+
+# ---------------------------------------------------------------------------
+# Logs & temp
+# ---------------------------------------------------------------------------
+logs/
+*.log
+firebase-debug.log
+tmp/
+temp/
+.tmp
+**/*.backup.*
+**/*.back.*
+
+# ---------------------------------------------------------------------------
+# Editors & OS
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_*
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sublime*
+*.swp
+*.sw?
+*.suo
+.aider*
+.tool-versions

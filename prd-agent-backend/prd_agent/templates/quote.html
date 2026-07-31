@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leanware Project Quote</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .disclaimer {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+      }
+      .next-steps {
+        margin: 20px 0;
+      }
+      .next-steps h3 {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Dear {{name}},</p>
+
+    <p>
+      Thank you for sharing your project requirements with our Leanware Agent.
+      We're pleased to provide you with a preliminary quote based on the
+      information you've shared.
+    </p>
+
+    <p>
+      Please review the attached PDF for the complete quote and the project
+      requirements we've generated based on our conversation. This document
+      outlines our understanding of your project needs and serves as the
+      foundation for this quote.
+    </p>
+
+    <div class="disclaimer">
+      <p>
+        <b>DISCLAIMER</b>: This is a preliminary AI-generated estimation. All
+        quotes require thorough human review and validation before being
+        considered final. Actual project costs and timelines may vary.
+      </p>
+    </div>
+
+    <div class="next-steps">
+      <h3>Next Steps:</h3>
+      <ol>
+        <li>Review the attached quote.</li>
+        <li>
+          Schedule a call with our team to discuss any adjustments or
+          clarifications.
+        </li>
+        <li>Receive a finalized quote after consultation with our experts.</li>
+      </ol>
+    </div>
+
+    <p>
+      If you have any questions or need further information, please reply to
+      this email or contact our sales team at
+      <a href="mailto:info@leanware.co">info@leanware.co</a>. We're excited
+      about the possibility of collaborating with you on this project.
+    </p>
+
+    <p>Best regards,</p>
+
+    <table style="border-collapse: collapse">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top; border: 1px solid #ccc; padding: 8px">
+            <img
+              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHZlcnNpb249IjEuMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTkyLjAwMDAwMHB0IiBoZWlnaHQ9IjE5Mi4wMDAwMDBwdCIKICAgIHZpZXdCb3g9IjAgMCAxOTIuMDAwMDAwIDE5Mi4wMDAwMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgoKICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAwMDAwLDE5Mi4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+CiAgICAgICAgPHBhdGggZD0iTTQxOCAxNTUwIGwxMDIgLTEwMCA0NjUgMCA0NjUgMCAwIC00NDcgYzAgLTI0NyA0IC00NTIgOCAtNDU4IDQgLTUKNTEgLTUzIDEwNSAtMTA1IGw5NyAtOTUgMCA2NTMgMCA2NTIgLTY3MiAwIC02NzMgLTEgMTAzIC05OXoiIC8+CiAgICAgICAgPHBhdGggZD0iTTIyOCA5MDAgbDIgLTY1MCA2NzMgMCA2NzIgMCAtMTA3IDEwNSAtMTA2IDEwNSAtNDYxIDAgLTQ2MSAwIDAgNDQ1CjAgNDQ1IC0xMDEgOTggYy01NiA1MyAtMTA0IDk4IC0xMDggMTAwIC0zIDEgLTUgLTI5MCAtMyAtNjQ4eiIgLz4KICAgICAgICA8cGF0aCBkPSJNNzMxIDEyODQgYy0zNiAtMjYgLTUxIC03NSAtNTEgLTE2OCAwIC03OCAtMiAtODUgLTI1IC0xMDAgLTE5IC0xMwotMjUgLTI1IC0yNSAtNTUgMCAtMzEgNSAtNDAgMjUgLTQ5IDI0IC0xMSAyNSAtMTUgMjUgLTEwNyAwIC0xNTUgMzMgLTIwNSAxMzUKLTIwNSBsNDUgMCAwIDU0IGMwIDQ5IC0yIDU1IC0yMiA1OCAtMjEgMyAtMjMgOSAtMjggOTMgLTUgODkgLTE0IDEyMCAtNDUgMTQ1Ci0xNCAxMiAtMTMgMTYgMTIgNDIgMjQgMjUgMjggMzkgMzMgMTExIDUgNzYgNyA4MiAyOCA4NSAyMCAzIDIyIDkgMjIgNTggbDAKNTQgLTUzIDAgYy0zMiAwIC02MSAtNiAtNzYgLTE2eiIgLz4KICAgICAgICA8cGF0aCBkPSJNMTAwMCAxMjQ2IGMwIC01MiAxIC01NSAyOCAtNTggMjYgLTMgMjcgLTUgMzIgLTgzIDUgLTgzIDE4IC0xMTggNDYKLTEyOSAxMyAtNSAxMSAtMTIgLTE1IC00MSAtMzAgLTM0IC0zMSAtMzkgLTMxIC0xMjYgbDAgLTg5IC0zMCAtNiBjLTI5IC02Ci0zMCAtOSAtMzAgLTYwIGwwIC01NCA1NiAwIGM1MCAwIDU5IDMgOTAgMzQgbDM0IDM0IDAgMTExIGMwIDEwNyAxIDExMSAyNQoxMjcgMTkgMTMgMjUgMjUgMjUgNTUgMCAyNyAtNyA0NSAtMjUgNjMgLTIzIDIzIC0yNSAzMyAtMjUgMTExIDAgMTMzIC0yNCAxNjUKLTEyNCAxNjUgbC01NiAwIDAgLTU0eiIgLz4KICAgIDwvZz4KPC9zdmc+"
+              alt="Leanware Logo"
+              style="width: 50px; height: 50px"
+            />
+          </td>
+          <td style="border: 1px solid #ccc; padding: 8px">
+            <div>
+              Carlos Martinez<br />
+              CEO<br />
+              <a href="https://www.leanware.co">www.leanware.co</a> |
+              <a href="https://www.linkedin.com/company/leanware-io/mycompany/"
+                >LinkedIn</a
+              ><br />
+              Email: <a href="mailto:info@leanware.co">info@leanware.co</a
+              ><br />
+              Bogotá, Colombia | Miami, FL. USA
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
