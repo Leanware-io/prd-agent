@@ -86,7 +86,7 @@
     "jest-canvas-mock": "^2.5.2",
     "jest-environment-jsdom": "^29.7.0",
     "madge": "^6.1.0",
-    "postcss": "^8.5.1",
+    "postcss": "^8.5.23",
     "postcss-styled-syntax": "^0.7.1",
     "prettier": "^3.2.5",
     "steiger": "^0.5.4",
